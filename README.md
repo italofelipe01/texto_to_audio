@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Texto para Áudio em Português</title>
-</head>
 <body>
     <h1>Texto para Áudio em Português</h1>
     <p>Este é um programa simples que usa a biblioteca <a href="https://pypi.org/project/gTTS/" target="_blank">gTTS</a> para converter um texto em áudio em português. Ele também usa a biblioteca <a href="https://docs.python.org/3/library/os.html" target="_blank">os</a> para executar o comando <code>ffplay</code> para reproduzir o arquivo de áudio gerado.</p>
