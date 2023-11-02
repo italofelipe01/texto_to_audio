@@ -28,6 +28,6 @@
         Olá, este é um exemplo de texto para áudio em português.
     </blockquote>
     <h2>Licença</h2>
-    <p>Este projeto está licenciado sob a licença MIT. Veja o arquivo <a href="URL_PARA_O_ARQUIVO_LICENSE" target="_blank">LICENSE</a> para mais detalhes.</p>
+    <p>Este projeto está licenciado sob a licença MIT. Veja o arquivo <a href="https://github.com/italofelipe01/texto_to_audio/blob/main/LICENSE.txt" target="_blank">LICENSE</a> para mais detalhes.</p>
 </body>
 </html>
