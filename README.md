@@ -60,5 +60,3 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICE
 **Ítalo Felipe Lira de Morais**
 
 ---
-
-**Nota:** Corrigi os problemas de formatação do markdown, especialmente os blocos de código que não estavam sendo fechados corretamente. Agora todos os snippets de bash estão devidamente formatados e separados.
