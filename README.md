@@ -1,9 +1,6 @@
-Aqui está o arquivo `README.md` formatado de acordo com os padrões exigidos para auditoria de software (Edital 35/2025), pronto para ser utilizado na raiz do seu repositório.
-
-````markdown
 # Texto para Áudio (TTS Converter)
 
-![Version]({https://img.shields.io/badge/version-v1.0.0-blue?style=for-the-badge})
+![Version](https://img.shields.io/badge/version-v1.0.0-blue?style=for-the-badge)
 ![License]({https://img.shields.io/badge/license-MIT-green?style=for-the-badge})
 ![Status]({https://img.shields.io/badge/status-stable-success?style=for-the-badge})
 ![Python]({https://img.shields.io/badge/python-3.6%2B-blueviolet?style=for-the-badge})
@@ -65,6 +62,3 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](http
 ## 👤 Autor
 
 **Ítalo Felipe Lira de Morais**
-
-```
-```
