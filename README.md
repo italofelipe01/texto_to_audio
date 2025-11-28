@@ -1,27 +1,70 @@
-<body>
-    <h1>Texto para Áudio em Português</h1>
-    <p>Este é um programa simples que usa a biblioteca <a href="https://pypi.org/project/gTTS/" target="_blank">gTTS</a> para converter um texto em áudio em português. Ele também usa a biblioteca <a href="https://docs.python.org/3/library/os.html" target="_blank">os</a> para executar o comando <code>ffplay</code> para reproduzir o arquivo de áudio gerado.</p>
-    <h2>Requisitos</h2>
-    <ul>
-        <li>Python 3.6 ou superior</li>
-        <li>gTTS 2.2.3 ou superior</li>
-        <li>ffmpeg 4.4 ou superior</li>
-    </ul>
-    <h2>Como usar</h2>
-    <ol>
-        <li>Clone este repositório ou baixe o arquivo <code>texto_para_audio.py</code></li>
-        <li>Instale as dependências com o comando <code>pip install -r requirements.txt</code></li>
-        <li>Execute o programa com o comando <code>python texto_para_audio.py</code></li>
-        <li>Digite a sua mensagem a ser disponibilizada em áudio e pressione Enter</li>
-        <li>Aguarde a geração do arquivo <code>audio.mp3</code> e a reprodução do mesmo</li>
-    </ol>
-    <h2>Exemplo</h2>
-    <p>Insira sua mensagem a ser disponibilizada em áudio por favor: <em>Olá, este é um exemplo de texto para áudio em português.</em></p>
-    <p>O programa irá gerar e reproduzir um arquivo de áudio com a seguinte mensagem:</p>
-    <blockquote>
-        Olá, este é um exemplo de texto para áudio em português.
-    </blockquote>
-    <h2>Licença</h2>
-    <p>Este projeto está licenciado sob a licença MIT. Veja o arquivo <a href="https://github.com/italofelipe01/texto_to_audio/blob/main/LICENSE.txt" target="_blank">LICENSE</a> para mais detalhes.</p>
-</body>
-</html>
+Aqui está o arquivo `README.md` formatado de acordo com os padrões exigidos para auditoria de software (Edital 35/2025), pronto para ser utilizado na raiz do seu repositório.
+
+````markdown
+# Texto para Áudio (TTS Converter)
+
+![Version](https://img.shields.io/badge/version-v1.0.0-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-stable-success?style=for-the-badge)
+![Python](https://img.shields.io/badge/python-3.6%2B-blueviolet?style=for-the-badge)
+
+## 📄 Descrição
+O **Texto para Áudio** é uma solução de software desenvolvida para converter strings de texto em arquivos de áudio falado (Text-to-Speech) utilizando a API do Google Translate (gTTS). O sistema automatiza a síntese de voz em Português Brasileiro e a reprodução imediata do conteúdo gerado, servindo como ferramenta de apoio à acessibilidade e automação de mídia.
+
+## 🚀 Funcionalidades
+- **Síntese de Voz:** Conversão de texto livre para áudio em Português (`pt-br`).
+- [cite_start]**Reprodução Automática:** Integração nativa com `ffplay` (FFmpeg) para execução imediata do áudio gerado[cite: 5].
+- **Exportação de Arquivo:** Gera e salva automaticamente o arquivo `audio.mp3` no diretório local.
+- **Interface de Linha de Comando (CLI):** Interação simples e direta via terminal.
+
+## 🛠 Tecnologias Utilizadas
+- **Linguagem:** Python 3.6 ou superior.
+- **Bibliotecas:**
+  - `gTTS` (Google Text-to-Speech) v2.2.3+.
+  - `os` (Interação com Sistema Operacional).
+  - [cite_start]`datetime` (Gestão de Timestamp)[cite: 5].
+- **Dependência de Sistema:** FFmpeg 4.4 ou superior (necessário para o comando `ffplay`).
+
+## 📦 Instalação
+
+1. **Clone o repositório:**
+   ```bash
+   git clone [https://github.com/italofelipe01/texto_to_audio.git](https://github.com/italofelipe01/texto_to_audio.git)
+````
+
+2.  **Instale as dependências do Python:**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Instale o FFmpeg (Requisito de Sistema):**
+
+      * Certifique-se de que o `ffmpeg` está instalado e acessível no PATH do sistema, pois o script utiliza o comando `ffplay`.
+
+## ▶️ Uso
+
+1.  Execute o script principal via terminal:
+
+    ```bash
+    python texto_to_audio.py
+    ```
+
+2.  Quando solicitado, digite a mensagem que deseja converter:
+
+    ```text
+    Insira sua mensagem a ser disponibilizada em audio por favor: Olá, este é um teste.
+    ```
+
+3.  O sistema irá gerar o arquivo `audio.mp3` e reproduzi-lo automaticamente.
+
+## 📝 Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](https://www.google.com/search?q=LICENSE) para mais detalhes.
+
+## 👤 Autor
+
+**Ítalo Felipe Lira de Morais**
+
+```
+```
