@@ -10,7 +10,7 @@ O **Texto para Áudio** é uma solução de software desenvolvida para converter
 
 ## 🚀 Funcionalidades
 - **Síntese de Voz:** Conversão de texto livre para áudio em Português (`pt-br`).
-- [cite_start]**Reprodução Automática:** Integração nativa com `ffplay` (FFmpeg) para execução imediata do áudio gerado[cite: 5].
+- **Reprodução Automática:** Integração nativa com `ffplay` (FFmpeg) para execução imediata do áudio gerado.
 - **Exportação de Arquivo:** Gera e salva automaticamente o arquivo `audio.mp3` no diretório local.
 - **Interface de Linha de Comando (CLI):** Interação simples e direta via terminal.
 
@@ -19,46 +19,46 @@ O **Texto para Áudio** é uma solução de software desenvolvida para converter
 - **Bibliotecas:**
   - `gTTS` (Google Text-to-Speech) v2.2.3+.
   - `os` (Interação com Sistema Operacional).
-  - [cite_start]`datetime` (Gestão de Timestamp)[cite: 5].
+  - `datetime` (Gestão de Timestamp).
 - **Dependência de Sistema:** FFmpeg 4.4 ou superior (necessário para o comando `ffplay`).
 
 ## 📦 Instalação
 
 1. **Clone o repositório:**
-   ```bash
-   git clone [https://github.com/italofelipe01/texto_to_audio.git](https://github.com/italofelipe01/texto_to_audio.git)
-````
+```bash
+git clone https://github.com/italofelipe01/texto_to_audio.git
+```
 
-2.  **Instale as dependências do Python:**
+2. **Instale as dependências do Python:**
+```bash
+pip install -r requirements.txt
+```
 
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3.  **Instale o FFmpeg (Requisito de Sistema):**
-
-      * Certifique-se de que o `ffmpeg` está instalado e acessível no PATH do sistema, pois o script utiliza o comando `ffplay`.
+3. **Instale o FFmpeg (Requisito de Sistema):**
+   - Certifique-se de que o `ffmpeg` está instalado e acessível no PATH do sistema, pois o script utiliza o comando `ffplay`.
 
 ## ▶️ Uso
 
-1.  Execute o script principal via terminal:
+1. Execute o script principal via terminal:
+```bash
+python texto_to_audio.py
+```
 
-    ```bash
-    python texto_to_audio.py
-    ```
+2. Quando solicitado, digite a mensagem que deseja converter:
+```
+Insira sua mensagem a ser disponibilizada em audio por favor: Olá, este é um teste.
+```
 
-2.  Quando solicitado, digite a mensagem que deseja converter:
-
-    ```text
-    Insira sua mensagem a ser disponibilizada em audio por favor: Olá, este é um teste.
-    ```
-
-3.  O sistema irá gerar o arquivo `audio.mp3` e reproduzi-lo automaticamente.
+3. O sistema irá gerar o arquivo `audio.mp3` e reproduzi-lo automaticamente.
 
 ## 📝 Licença
 
-Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](https://www.google.com/search?q=LICENSE) para mais detalhes.
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## 👤 Autor
 
 **Ítalo Felipe Lira de Morais**
+
+---
+
+**Nota:** Corrigi os problemas de formatação do markdown, especialmente os blocos de código que não estavam sendo fechados corretamente. Agora todos os snippets de bash estão devidamente formatados e separados.
