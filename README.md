@@ -3,10 +3,10 @@ Aqui está o arquivo `README.md` formatado de acordo com os padrões exigidos pa
 ````markdown
 # Texto para Áudio (TTS Converter)
 
-![Version](https://img.shields.io/badge/version-v1.0.0-blue?style=for-the-badge)
-![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
-![Status](https://img.shields.io/badge/status-stable-success?style=for-the-badge)
-![Python](https://img.shields.io/badge/python-3.6%2B-blueviolet?style=for-the-badge)
+![Version]({https://img.shields.io/badge/version-v1.0.0-blue?style=for-the-badge})
+![License]({https://img.shields.io/badge/license-MIT-green?style=for-the-badge})
+![Status]({https://img.shields.io/badge/status-stable-success?style=for-the-badge})
+![Python]({https://img.shields.io/badge/python-3.6%2B-blueviolet?style=for-the-badge})
 
 ## 📄 Descrição
 O **Texto para Áudio** é uma solução de software desenvolvida para converter strings de texto em arquivos de áudio falado (Text-to-Speech) utilizando a API do Google Translate (gTTS). O sistema automatiza a síntese de voz em Português Brasileiro e a reprodução imediata do conteúdo gerado, servindo como ferramenta de apoio à acessibilidade e automação de mídia.
