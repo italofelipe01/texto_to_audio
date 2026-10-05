@@ -4,14 +4,19 @@ authors:
 - family-names: "Lira de Morais"
   given-names: "Ítalo Felipe"
 title: "Texto para Áudio (TTS Converter)"
-version: 1.0.0
-date-released: 2024-01-15
+version: 3.0.0
+date-released: 2026-10-05
 url: "https://github.com/italofelipe01/texto_to_audio"
+repository-code: "https://github.com/italofelipe01/texto_to_audio"
 type: software
 license: MIT
 keywords:
   - text-to-speech
   - python
+  - ffmpeg
   - acessibilidade
+  - audiobook
+  - podcast
+  - edge-tts
+  - piper
   - automação
-  - gtts

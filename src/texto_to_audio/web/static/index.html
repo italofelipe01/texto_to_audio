@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Converta textos e documentos em áudio com vozes neurais gratuitas e pós-produção profissional com FFmpeg.">
+  <title>Texto para Áudio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M8 13v6M12 10v12M16 7v18M20 11v10M24 14v4' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#job-form">Pular para o formulário</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M8 13v6M12 10v12M16 7v18M20 11v10M24 14v4"/></svg>
+      <div>
+        <h1>Texto para Áudio</h1>
+        <p>Vozes neurais gratuitas + pós-produção com FFmpeg</p>
+      </div>
+    </div>
+    <div class="status" id="status" aria-label="Estado do sistema"><span class="pill">Carregando…</span></div>
+    <button type="button" class="icon-btn" id="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg>
+    </button>
+  </header>
+
+  <main class="layout">
+    <form id="job-form" class="column" novalidate>
+      <!-- 1. Conteúdo -->
+      <section class="card" aria-labelledby="h-content">
+        <div class="card-head"><span class="step">1</span><h2 id="h-content">Conteúdo</h2></div>
+        <div class="tabs" role="tablist" aria-label="Origem do conteúdo">
+          <button type="button" role="tab" id="tab-text" aria-controls="panel-text" aria-selected="true" data-tab="text">Digitar texto</button>
+          <button type="button" role="tab" id="tab-file" aria-controls="panel-file" aria-selected="false" data-tab="file" tabindex="-1">Enviar arquivo</button>
+        </div>
+        <div class="tab-panel" id="panel-text" role="tabpanel" aria-labelledby="tab-text">
+          <label class="sr-only" for="text">Texto</label>
+          <textarea id="text" rows="10" spellcheck="true" placeholder="Cole ou digite seu texto aqui.&#10;&#10;Dica: linhas iniciadas com # viram capítulos (ex.: # Capítulo 1)."></textarea>
+          <div class="meta-row">
+            <span id="text-stats" class="muted">0 caracteres · 0 palavras · ~0 s de áudio</span>
+            <button type="button" class="link" id="clear-text">Limpar</button>
+          </div>
+        </div>
+        <div class="tab-panel" id="panel-file" role="tabpanel" aria-labelledby="tab-file" hidden>
+          <label class="dropzone" id="dropzone">
+            <input type="file" id="file" class="sr-only">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+            <strong>Arraste um arquivo aqui ou clique para escolher</strong>
+            <small id="file-help">TXT, Markdown, HTML, DOCX, ODT, EPUB e PDF</small>
+            <span class="file-name" id="file-name"></span>
+          </label>
+        </div>
+        <label class="field">
+          <span>Título <em class="muted">(opcional)</em></span>
+          <input id="title" type="text" maxlength="200" placeholder="Usado nos metadados, nos capítulos e no vídeo">
+        </label>
+      </section>
+
+      <!-- 2. Perfil -->
+      <section class="card" aria-labelledby="h-preset">
+        <div class="card-head"><span class="step">2</span><h2 id="h-preset">Perfil de saída</h2></div>
+        <div class="presets" id="presets" role="radiogroup" aria-labelledby="h-preset"></div>
+      </section>
+
+      <!-- 3. Voz -->
+      <section class="card" aria-labelledby="h-voice">
+        <div class="card-head"><span class="step">3</span><h2 id="h-voice">Voz</h2></div>
+        <div class="grid-3">
+          <label class="field"><span>Idioma</span><select id="lang"></select></label>
+          <label class="field"><span>Motor de voz</span><select id="engine"></select></label>
+          <label class="field"><span>Voz</span><select id="voice"></select></label>
+        </div>
+        <div class="grid-2">
+          <label class="field range">
+            <span>Velocidade <output id="rate-out" for="rate">normal</output></span>
+            <input type="range" id="rate" min="-50" max="100" step="5" value="0">
+          </label>
+          <label class="field range">
+            <span>Tom <output id="pitch-out" for="pitch">original</output></span>
+            <input type="range" id="pitch" min="-12" max="12" step="0.5" value="0">
+          </label>
+        </div>
+        <div class="row">
+          <button type="button" class="btn secondary" id="preview-btn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Ouvir amostra
+          </button>
+          <span class="muted" id="preview-status" aria-live="polite"></span>
+        </div>
+        <p class="hint" id="engine-hint"></p>
+      </section>
+
+      <!-- 4. Pós-produção -->
+      <details class="card" id="post-card">
+        <summary><span class="step">4</span><h2>Pós-produção FFmpeg</h2><span class="summary-hint" id="post-summary"></span></summary>
+        <fieldset class="field">
+          <legend>Formatos de áudio</legend>
+          <div class="checks" id="formats"></div>
+        </fieldset>
+        <div class="grid-2">
+          <label class="field"><span>Loudness (volume percebido)</span>
+            <select id="loudness">
+              <option value="-14">-14 LUFS · YouTube, Spotify, redes sociais</option>
+              <option value="-16">-16 LUFS · Podcast (Apple/Spotify)</option>
+              <option value="-18">-18 LUFS · Audiobook (ACX)</option>
+              <option value="-23">-23 LUFS · Rádio/TV (EBU R128)</option>
+              <option value="off">Sem normalização</option>
+            </select>
+          </label>
+          <label class="field"><span>Pico máximo (true peak)</span>
+            <select id="true_peak">
+              <option value="-1">-1 dBTP</option>
+              <option value="-1.5">-1,5 dBTP</option>
+              <option value="-2">-2 dBTP</option>
+              <option value="-3">-3 dBTP (ACX)</option>
+            </select>
+          </label>
+        </div>
+        <div class="toggles">
+          <label class="toggle"><input type="checkbox" id="enhance"><span>Tratamento de voz <small>EQ de presença, de-esser e compressor</small></span></label>
+          <label class="toggle"><input type="checkbox" id="trim_silence"><span>Remover silêncios das pontas <small>ritmo uniforme entre frases</small></span></label>
+        </div>
+        <div class="grid-3">
+          <label class="field range"><span>Pausa entre frases <output id="pause_sentence-out"></output></span><input type="range" id="pause_sentence" min="0" max="2" step="0.05"></label>
+          <label class="field range"><span>Entre parágrafos <output id="pause_paragraph-out"></output></span><input type="range" id="pause_paragraph" min="0" max="3" step="0.1"></label>
+          <label class="field range"><span>Entre capítulos <output id="pause_section-out"></output></span><input type="range" id="pause_section" min="0" max="5" step="0.1"></label>
+        </div>
+      </details>
+
+      <!-- 5. Trilha -->
+      <details class="card" id="music-card">
+        <summary><span class="step">5</span><h2>Trilha e vinhetas</h2><span class="summary-hint">música de fundo com ducking</span></summary>
+        <div class="grid-2">
+          <label class="field"><span>Música de fundo</span><input type="file" id="music" accept=".mp3,.wav,.m4a,.aac,.ogg,.opus,.flac,.webm"></label>
+          <label class="field range"><span>Volume da música <output id="music_gain_db-out"></output></span><input type="range" id="music_gain_db" min="-40" max="-6" step="1"></label>
+        </div>
+        <label class="toggle"><input type="checkbox" id="ducking"><span>Ducking automático <small>abaixa a música enquanto a voz fala (sidechain)</small></span></label>
+        <div class="grid-2">
+          <label class="field"><span>Vinheta de abertura</span><input type="file" id="intro" accept=".mp3,.wav,.m4a,.aac,.ogg,.opus,.flac,.webm"></label>
+          <label class="field"><span>Vinheta de encerramento</span><input type="file" id="outro" accept=".mp3,.wav,.m4a,.aac,.ogg,.opus,.flac,.webm"></label>
+        </div>
+        <p class="hint">Use trilhas livres de direitos, como as da Biblioteca de Áudio do YouTube ou do Free Music Archive.</p>
+      </details>
+
+      <!-- 6. Vídeo -->
+      <details class="card" id="video-card">
+        <summary><span class="step">6</span><h2>Vídeo, legendas e capa</h2><span class="summary-hint" id="video-summary"></span></summary>
+        <fieldset class="field">
+          <legend>Gerar vídeo MP4</legend>
+          <div class="segmented" id="video-choice">
+            <label><input type="radio" name="video" value=""><span>Não</span></label>
+            <label><input type="radio" name="video" value="landscape"><span>16:9 YouTube</span></label>
+            <label><input type="radio" name="video" value="portrait"><span>9:16 Reels/Shorts</span></label>
+            <label><input type="radio" name="video" value="square"><span>1:1 Feed</span></label>
+          </div>
+        </fieldset>
+        <div class="grid-2">
+          <label class="field"><span>Visualização</span>
+            <select id="video_style">
+              <option value="waves">Forma de onda</option>
+              <option value="bars">Barras de espectro</option>
+              <option value="none">Nenhuma</option>
+            </select>
+          </label>
+          <label class="field"><span>Imagem de fundo do vídeo</span><input type="file" id="background" accept=".jpg,.jpeg,.png,.webp"></label>
+        </div>
+        <label class="field"><span>Capa (embutida no MP3/M4B e usada no vídeo)</span><input type="file" id="cover" accept=".jpg,.jpeg,.png,.webp"></label>
+        <div class="toggles">
+          <label class="toggle"><input type="checkbox" id="burn_subtitles"><span>Legendas no vídeo</span></label>
+          <label class="toggle"><input type="checkbox" id="subtitles"><span>Arquivos de legenda SRT e WebVTT</span></label>
+          <label class="toggle"><input type="checkbox" id="chapters"><span>Capítulos a partir dos títulos</span></label>
+          <label class="toggle"><input type="checkbox" id="waveform"><span>Imagem da forma de onda</span></label>
+        </div>
+      </details>
+
+      <!-- 7. Metadados -->
+      <details class="card" id="meta-card">
+        <summary><span class="step">7</span><h2>Metadados e pronúncia</h2><span class="summary-hint">autor, álbum, dicionário</span></summary>
+        <div class="grid-2">
+          <label class="field"><span>Autor / narrador</span><input type="text" id="artist" maxlength="120"></label>
+          <label class="field"><span>Álbum / série</span><input type="text" id="album" maxlength="120"></label>
+        </div>
+        <label class="field">
+          <span>Dicionário de pronúncia <em class="muted">(um por linha: termo = como falar)</em></span>
+          <textarea id="lexicon" rows="4" placeholder="IA = i a&#10;TTS = tê tê ésse&#10;Sr. = senhor"></textarea>
+        </label>
+      </details>
+
+      <div class="actions">
+        <button type="submit" class="btn primary" id="submit-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h3l2-6 4 12 2-6h3"/></svg>
+          Gerar áudio
+        </button>
+        <span class="muted kbd-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
+        <button type="button" class="link" id="reset-form">Restaurar padrões</button>
+      </div>
+    </form>
+
+    <aside class="column">
+      <section class="card job" id="job-card" hidden aria-labelledby="job-title">
+        <div class="card-head">
+          <h2 id="job-title">Processando</h2>
+          <span class="badge" id="job-badge"></span>
+        </div>
+        <div id="job-progress">
+          <div class="progress" role="progressbar" aria-labelledby="job-stage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" id="job-bar"></div></div>
+          <div class="meta-row">
+            <span id="job-stage" aria-live="polite">Na fila</span>
+            <button type="button" class="link danger" id="cancel-btn">Cancelar</button>
+          </div>
+        </div>
+        <div class="alert" id="job-error" role="alert" hidden></div>
+
+        <div id="job-result" hidden>
+          <div class="player" id="player">
+            <button type="button" class="play-btn" id="play-btn" aria-label="Reproduzir">
+              <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+            </button>
+            <div class="wave-wrap">
+              <canvas id="wave" role="slider" tabindex="0" aria-label="Posição do áudio" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></canvas>
+              <div class="times"><span id="time-current">0:00</span><span id="time-total">0:00</span></div>
+            </div>
+            <label class="speed"><span class="sr-only">Velocidade de reprodução</span>
+              <select id="speed">
+                <option value="0.75">0,75×</option><option value="1" selected>1×</option>
+                <option value="1.25">1,25×</option><option value="1.5">1,5×</option><option value="2">2×</option>
+              </select>
+            </label>
+            <audio id="audio" preload="metadata"></audio>
+          </div>
+
+          <div class="result-tabs" role="tablist" aria-label="Detalhes do resultado">
+            <button type="button" role="tab" data-rtab="transcript" aria-selected="true">Transcrição</button>
+            <button type="button" role="tab" data-rtab="downloads" aria-selected="false" tabindex="-1">Downloads</button>
+            <button type="button" role="tab" data-rtab="report" aria-selected="false" tabindex="-1">Qualidade</button>
+          </div>
+          <div class="rtab-panel" data-rpanel="transcript">
+            <ol class="chapters" id="chapters" hidden></ol>
+            <label class="toggle small"><input type="checkbox" id="follow" checked><span>Acompanhar a leitura</span></label>
+            <div class="transcript" id="transcript" tabindex="0" aria-label="Transcrição sincronizada"></div>
+          </div>
+          <div class="rtab-panel" data-rpanel="downloads" hidden>
+            <video id="video" controls preload="metadata" hidden></video>
+            <ul class="downloads" id="downloads"></ul>
+            <a class="btn secondary block" id="zip-link" href="#">Baixar tudo (.zip)</a>
+          </div>
+          <div class="rtab-panel" data-rpanel="report" hidden>
+            <dl class="report" id="report"></dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-history">
+        <div class="card-head">
+          <h2 id="h-history">Histórico</h2>
+          <button type="button" class="icon-btn small" id="refresh-history" aria-label="Atualizar histórico" title="Atualizar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>
+          </button>
+        </div>
+        <ul class="history" id="history"><li class="muted">Nenhum áudio gerado ainda.</li></ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <span>Texto para Áudio <span id="version"></span> · MIT</span>
+    <a href="/docs" target="_blank" rel="noopener">API</a>
+    <a href="https://github.com/italofelipe01/texto_to_audio" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
