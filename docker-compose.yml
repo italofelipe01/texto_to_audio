@@ -1,0 +1,26 @@
+# Sobe tudo com: docker compose up -d --build
+#   - web:     interface em http://localhost:8000
+#   - watcher: converte automaticamente o que for colocado em ./data/entrada
+# Configurações opcionais: copie .env.example para .env e ajuste.
+
+x-app: &app
+  build: .
+  image: texto-to-audio:latest
+  volumes:
+    - ./data:/data
+  env_file:
+    - path: .env
+      required: false
+  restart: unless-stopped
+
+services:
+  web:
+    <<: *app
+    ports:
+      - "${TTA_PORT:-8000}:8000"
+
+  watcher:
+    <<: *app
+    command: ["tta", "watch", "/data/entrada", "-o", "/data/saida", "--preset", "${TTA_WATCH_PRESET:-padrao}"]
+    healthcheck:
+      disable: true

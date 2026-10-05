@@ -1,0 +1,13 @@
+.git
+.github
+.venv
+venv
+data
+tests
+**/__pycache__
+**/*.egg-info
+*.mp3
+*.wav
+*.mp4
+.pytest_cache
+.ruff_cache

@@ -1,0 +1,8 @@
+# Dicionário de pronúncia: "termo = como deve ser falado".
+# Termos em MAIÚSCULAS (siglas) diferenciam maiúsculas/minúsculas; os demais não.
+# Copie para data/pronuncia.txt para valer em todos os jobs (ou cole na interface web).
+IA = i a
+TTS = tê tê ésse
+FFmpeg = éfe éfe ém pég
+LUFS = lufs
+km/h = quilômetros por hora

@@ -1,0 +1,8 @@
+{
+  "preset": "audiobook",
+  "voice": "pt-BR-AntonioNeural",
+  "title": "O Farol da Ilha",
+  "artist": "Nome do Autor",
+  "album": "Contos do Litoral",
+  "cover": "capa.jpg"
+}

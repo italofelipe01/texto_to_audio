@@ -1,5 +1,19 @@
+# Python
 __pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Dados gerados (saídas, cache, vozes baixadas)
+data/
+audio.*
 *.mp3
-*.pyc
+
+# Sistema / segredos
 .DS_Store
 .env

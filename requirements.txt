@@ -1,1 +1,3 @@
-gTTS>=2.2.3
+# Instala o projeto com interface web e leitura de PDF.
+# Para a voz offline Piper use: pip install -e ".[all]"
+-e .[web,pdf]
